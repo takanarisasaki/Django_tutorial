@@ -2,9 +2,10 @@
 # So instead of creating that admin page, Django has already made it for you.
 
 from django.contrib import admin
-from .models import Album
+from .models import Album, Song
 
 # We have to tell Django that Album class should have an admin interface.
 # Register Album class as admin site.
 # Then under music app, we can see Album.
 admin.site.register(Album)
+admin.site.register(Song)
