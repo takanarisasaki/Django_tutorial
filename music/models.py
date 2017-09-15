@@ -22,6 +22,8 @@ from django.db import models
 # | ID | artist | album_title | genre | album_logo |
 #  ________________________________________________
 
+# Migrations are needed only when we make a new table or when we make a new column of a table.
+
 class Album(models.Model):
     artist = models.CharField(max_length=250)
     album_title = models.CharField(max_length=500)
@@ -39,4 +41,7 @@ class Album(models.Model):
 class Song(models.Model):
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
     file_type = models.CharField(max_length=10)
-    song_tile = models.CharField(max_length=250)
+    song_title = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.song_title
