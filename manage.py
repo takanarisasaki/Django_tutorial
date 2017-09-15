@@ -21,6 +21,10 @@ import sys
 # >>> Album.objects.filter(id=1)
 # >>> Album.objects.filter(artist__startswith="Taylor")
 
+# To create admin, run "python manage.py createsuperuser"
+# username: admin
+# password: adminadmin
+# Administration: Access to backend
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "website.settings")
