@@ -3,10 +3,25 @@
 # Each URL in urls.py is connected to a view, i.e. each URL is connected to an HTML response.
 
 from django.http import HttpResponse
+# Since we are going to work with Album information, we need to import it.
+from .models import Album
 
 # request is an HTML request
 def index(request):
-    return HttpResponse("<h1> This is the Music app homepage </h1>")
+    # First, we need to connect to the database and get all of the Albums.
+    # all_albums will store the results of the database call.
+    # Album.objects.all() will connect to the database, look inside Album table, and store it inside all_albums
+    all_albums = Album.objects.all()
+    html = ''
+
+    # Now that we have a list of albums, we need to loop through them so that we can access them one by one.
+    for album in all_albums:
+        # For each album, we want to make a link.
+        # Cannot concatenate integer with string, so need to convert to string first.
+        url = '/music/' + str(album.id) + '/'
+        html += '<a href=" ' + url + ' ">' + album.album_title + '</a> <br>'
+
+    return HttpResponse(html)
 
 # album_id came from music/urls.py
 # So whenever this function is called, it returns this HTTP response.
