@@ -9,6 +9,9 @@ from .models import Album
 # from django.template import loader
 from django.shortcuts import render
 
+# When we don't have a webpage to show, we want to send back 404 HTTP error.
+from django.http import Http404
+
 
 # # request is an HTML request
 # def index(request):
@@ -50,7 +53,16 @@ def index(request):
     return render(request, 'music/index.html', context)
 
 
-# album_id came from music/urls.py
-# So whenever this function is called, it returns this HTTP response.
+# # album_id came from music/urls.py
+# # So whenever this function is called, it returns this HTTP response.
+# def detail(request, album_id):
+#     return HttpResponse("<h2> Details for Album ID:" + str(album_id) + "</h2>")
+
+# Check if the album exist. If not, raise Http404 Error.
 def detail(request, album_id):
-    return HttpResponse("<h2> Details for Album ID:" + str(album_id) + "</h2>")
+    try:
+        album = Album.objects.get(id=album_id)
+    except Album.DoesNotExist:
+        raise Http404("Album does not exist")
+
+    return render(request, 'music/details.html', {'album': album})
