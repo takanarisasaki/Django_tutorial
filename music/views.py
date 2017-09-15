@@ -6,7 +6,9 @@
 from django.http import HttpResponse
 # Since we are going to work with Album information, we need to import it.
 from .models import Album
-from django.template import loader
+# from django.template import loader
+from django.shortcuts import render
+
 
 # # request is an HTML request
 # def index(request):
@@ -26,19 +28,26 @@ from django.template import loader
 #     return HttpResponse(html)
 
 
-# Using template to separate our front-end code from back-end code
-# First, make a template file in /music/templates/music/index.html
+# # Using template to separate our front-end code from back-end code
+# # First, make a template file in /music/templates/music/index.html
+# def index(request):
+#     all_albums = Album.objects.all()
+#     template = loader.get_template('music/index.html')
+#
+#     # Whenever we pass all_albums information to our template (music/index.html),
+#     # we pass it through a dictionary. We often name that dictionary "context".
+#     context = {
+#         'all_albums': all_albums,
+#     }
+#
+#     return HttpResponse(template.render(context, request))
+
+
+# Using "render" rather than HttpResponse to send back a response.
 def index(request):
     all_albums = Album.objects.all()
-    template = loader.get_template('music/index.html')
-
-    # Whenever we pass all_albums information to our template (music/index.html),
-    # we pass it through a dictionary. We often name that dictionary "context".
-    context = {
-        'all_albums': all_albums,
-    }
-
-    return HttpResponse(template.render(context, request))
+    context = {'all_albums': all_albums}
+    return render(request, 'music/index.html', context)
 
 
 # album_id came from music/urls.py
